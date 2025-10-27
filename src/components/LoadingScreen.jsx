@@ -12,7 +12,7 @@ export default function LoadingScreen() {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Image
-          src="/images/character/Chubby.gif"
+          src="/images/character/Chubby1.png"
           alt="Loading Chubby"
           width={150}
           height={150}

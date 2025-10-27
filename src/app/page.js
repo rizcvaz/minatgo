@@ -350,62 +350,59 @@ export default function Home() {
       </div>
 
       {/* Popup Intro (Simbol dibersihkan) */}
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.8, y: 50, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.8, y: 50, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className={`relative ${
-                darkMode ? "bg-zinc-900 text-white" : "bg-white text-black"
-              } rounded-3xl shadow-2xl max-w-md w-[90%] p-8 text-center`}
-            >
-              <div className="flex justify-center mb-6">
-                <Image
-                  src="/images/character/Chubby1.png"
-                  alt="Chubby"
-                  width={140}
-                  height={140}
-                  className="drop-shadow-xl"
-                />
-              </div>
+<AnimatePresence>
+  {showIntro && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ scale: 0.8, y: 50, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.8, y: 50, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className={`relative ${
+          darkMode ? "bg-zinc-900 text-white" : "bg-white text-black"
+        } rounded-2xl shadow-2xl max-w-sm w-[85%] p-5 text-center`}
+      >
+        <div className="flex justify-center mb-4">
+          <Image
+            src="/images/character/Chubby1.png"
+            alt="Chubby"
+            width={100}
+            height={100}
+            className="drop-shadow-xl"
+          />
+        </div>
 
-              <div
-                className={`relative mx-auto mb-8 rounded-2xl p-5 border-l-4 ${
-                  darkMode
-                    ? "bg-zinc-800 border-yellow-400"
-                    : "bg-yellow-100 border-orange-500"
-                } shadow-md`}
-              >
-                <p className="text-lg font-medium leading-relaxed">
-                  Hei, tahukah kamu? <br />
-                  <b className="text-orange-500 dark:text-yellow-400">Lebih dari 60% mahasiswa</b> merasa mereka salah memilih
-                  jurusan. Tes ini membantumu menemukan{" "}
-                  <b>arah yang sesuai</b> dengan kepribadian dan potensimu!
-                </p>
-              </div>
+        <div
+          className={`relative mx-auto mb-6 rounded-xl p-4 border-l-4 ${
+            darkMode
+              ? "bg-zinc-800 border-yellow-400"
+              : "bg-yellow-100 border-orange-500"
+          } shadow-md`}
+        >
+          <p className="text-base font-medium leading-relaxed">
+            Anda akan dialihkan ke halaman tes, mohon untuk tidak merefresh halaman selama tes berlangsung.
+          </p>
+        </div>
 
-              <button
-                onClick={handleContinue}
-                className={`px-8 py-3 text-lg rounded-2xl font-bold shadow-xl transition-transform duration-300 hover:scale-105 active:scale-95 ${
-                  darkMode
-                    ? "bg-yellow-400 text-black hover:bg-yellow-300"
-                    : "bg-black text-yellow-400 hover:bg-gray-800"
-                }`}
-              >
-                Saya Siap! Lanjutkan Tes <ArrowRight className="w-5 h-5 ml-2 inline-block" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <button
+          onClick={handleContinue}
+          className={`px-6 py-2.5 text-base rounded-xl font-bold shadow-lg transition-transform duration-300 hover:scale-105 active:scale-95 ${
+            darkMode
+              ? "bg-yellow-400 text-black hover:bg-yellow-300"
+              : "bg-black text-yellow-400 hover:bg-gray-800"
+          }`}
+        >
+          Lanjutkan <ArrowRight className="w-4 h-4 ml-1 inline-block" />
+        </button>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
       {/* 🌟 Transition Loading BARU - Lebih Keren! */}
       <AnimatePresence>

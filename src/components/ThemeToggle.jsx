@@ -7,7 +7,7 @@ export function ThemeToggle({ darkMode, setDarkMode }) {
   return (
     <motion.button
       onClick={() => setDarkMode(!darkMode)}
-      className={`fixed top-4 right-4 z-[1000] p-2 md:p-3 rounded-full ${
+      className={`fixed top-2 right-16 z-[1000] p-2 md:p-3 rounded-full ${
         darkMode ? "bg-yellow-400 text-black" : "bg-purple-900 text-white"
       } border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}
       whileHover={{ scale: 1.1 }}
