@@ -404,41 +404,44 @@ export default function Home() {
   )}
 </AnimatePresence>
 
-      {/* 🌟 Transition Loading BARU - Lebih Keren! */}
-      <AnimatePresence>
-        {isTransitioning && (
-          <motion.div
-            key="page-transition"
-            initial={{ clipPath: "circle(0% at 50% 50%)" }}
-            animate={{ clipPath: "circle(150% at 50% 50%)" }}
-            exit={{ clipPath: "circle(0% at 50% 50%)" }}
-            transition={{ duration: 1.5, ease: [0.8, 0.05, 0, 1] }} 
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-indigo-800 via-purple-700 to-fuchsia-600 text-white"
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-16 h-16 border-4 border-white border-t-yellow-400 rounded-full mb-6 shadow-lg"
-            />
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-3xl font-extrabold tracking-widest uppercase"
-            >
-              Menyiapkan Tes Terbaik...
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-              className="text-lg mt-2"
-            >
-              Mohon tunggu sebentar ya!
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+     {/* 🌟 Transition Loading BARU - Lebih Keren! */}
+<AnimatePresence>
+  {isTransitioning && (
+    <motion.div
+      key="page-transition"
+      initial={{ clipPath: "circle(0% at 50% 50%)" }}
+      animate={{ clipPath: "circle(150% at 50% 50%)" }}
+      exit={{ clipPath: "circle(0% at 50% 50%)" }}
+      transition={{ duration: 1.5, ease: [0.8, 0.05, 0, 1] }} 
+      // Tambahkan 'px-4' untuk padding horizontal agar teks tidak menempel di tepi
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-indigo-800 via-purple-700 to-fuchsia-600 text-white"
+    >
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        className="w-16 h-16 border-4 border-white border-t-yellow-400 rounded-full mb-6 shadow-lg"
+      />
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        // PERUBAHAN UTAMA: Kecilkan font di mobile (text-xl/2xl) dan kurangi tracking.
+        className="text-xl sm:text-3xl font-extrabold tracking-wider uppercase" 
+      >
+        Menyiapkan Tes Terbaik...
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.7 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+        // PERUBAHAN: Kecilkan font di mobile
+        className="text-sm sm:text-lg mt-2 font-medium"
+      >
+        Mohon tunggu sebentar ya!
+      </motion.p>
+    </motion.div>
+  )}
+</AnimatePresence>
     </main>
   );
 }

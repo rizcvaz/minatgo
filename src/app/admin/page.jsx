@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Fredoka } from "next/font/google";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import { BackgroundPattern } from "@/components/BackgroundPattern";
 import { Header } from "@/components/Header";
@@ -15,7 +14,7 @@ import { useDarkMode } from "@/hooks/useDarkMode";
 const fredoka = Fredoka({ subsets: ["latin"], weight: ["400", "600"] });
 
 export default function AdminLoginPage() {
-  const { darkMode, setDarkMode } = useDarkMode();
+  const [darkMode, toggleDarkMode] = useDarkMode();
   const router = useRouter();
 
   const [username, setUsername] = useState("");
@@ -45,13 +44,12 @@ export default function AdminLoginPage() {
   return (
     <div
       className={`relative min-h-screen flex flex-col items-center justify-center overflow-hidden transition-colors duration-500 ${
-        darkMode ? "bg-zinc-900 text-white" : "bg-blue-50 text-zinc-900"
+        darkMode ? "bg-zinc-900 text-white" : "bg-blue-50 text-black"
       }`}
     >
-      <BackgroundPattern />
+      <BackgroundPattern darkMode={darkMode} />
       <DecorationElements darkMode={darkMode} />
-      <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-
+      <ThemeToggle darkMode={darkMode} setDarkMode={toggleDarkMode} />
       <Header darkMode={darkMode} />
 
       <motion.div
@@ -60,49 +58,48 @@ export default function AdminLoginPage() {
         transition={{ duration: 0.6 }}
         className="z-20 text-center mt-8"
       >
-        <h1
-          className={`${fredoka.className} text-2xl md:text-3xl font-semibold mb-4`}
-        >
-          Masuk sebagai admin untuk mengelola soal tes minat bakat
-        </h1>
+   <h1
+  className={`${fredoka.className} text-2xl md:text-3xl font-extrabold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-500 drop-shadow-md`}
+>
+  Masuk sebagai admin untuk mengelola soal tes minat bakat
+</h1>
 
         <form
-          onSubmit={handleLogin}
-          className="mt-6 bg-white/10 dark:bg-zinc-800/70 backdrop-blur-md p-6 rounded-2xl shadow-lg max-w-sm mx-auto flex flex-col gap-4 border border-zinc-200/30"
-        >
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="p-3 rounded-lg bg-white dark:bg-zinc-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
+  onSubmit={handleLogin}
+  className="mt-6 bg-white/10 dark:bg-zinc-800/70 backdrop-blur-md p-6 rounded-2xl shadow-lg max-w-sm mx-auto flex flex-col gap-4 border border-zinc-200/30"
+>
+  <input
+    type="text"
+    placeholder="Username"
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
+    className="p-3 rounded-lg bg-white/10 dark:bg-zinc-700 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+    required
+  />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="p-3 rounded-lg bg-white dark:bg-zinc-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
+  <input
+    type="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="p-3 rounded-lg bg-white/10 dark:bg-zinc-700 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+    required
+  />
 
-          {error && (
-            <p className="text-red-500 text-sm font-medium mt-1">{error}</p>
-          )}
+  {error && <p className="text-red-500 text-sm font-medium mt-1">{error}</p>}
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="submit"
-            className="bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold shadow-md hover:bg-purple-700 transition-colors"
-          >
-            Login
-          </motion.button>
-        </form>
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.9 }}
+    type="submit"
+    className="bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold shadow-md hover:bg-purple-700 transition-colors"
+  >
+    Login
+  </motion.button>
+</form>
 
-        <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+
+        <p className={`${darkMode ? "text-white" : "text-black"} mt-4 text-sm`}>
           Gunakan username: <b>admin</b> & password: <b>12345</b> untuk demo.
         </p>
       </motion.div>

@@ -17,7 +17,7 @@ import { useDarkMode } from "@/hooks/useDarkMode";
 const fredoka = Fredoka({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 // --- KONSTANTA PAGINATION ---
-const ITEMS_PER_PAGE = 10; // Jumlah item per halaman
+const ITEMS_PER_PAGE = 5; // Jumlah item per halaman
 
 export default function AdminQuestionsPage() {
     const router = useRouter();
@@ -340,18 +340,21 @@ export default function AdminQuestionsPage() {
                 </div>
             </motion.form>
 
+         
+
             {/* Daftar Pertanyaan */}
-            <section className="w-full max-w-3xl mb-20">
-                <h2 className="text-2xl font-bold mb-4 text-center text-gray-700 dark:text-gray-200">
-                    📋 Daftar Pertanyaan (Total: {totalQuestions})
-                </h2>
-                {loading && questions.length === 0 ? (
-                    <div className="text-center p-6 text-xl dark:text-white">Memuat data...</div>
-                ) : questions.length === 0 ? (
-                    <div className="bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md shadow-lg rounded-xl p-6 text-center">
-                        <p className="text-gray-500 dark:text-gray-400">Belum ada pertanyaan tersimpan. Yuk, tambahkan yang pertama! ✨</p>
-                    </div>
-                ) : (
+        <section className="relative z-10 w-full max-w-3xl mb-20">
+  <h2 className={`text-2xl font-bold mb-4 text-center ${
+      darkMode ? "text-white" : "text-gray-800"
+  }`}>
+      📋 Daftar Pertanyaan (Total: {totalQuestions})
+  </h2>
+
+  {loading ? (
+    <div className="text-center p-6 text-xl dark:text-white">Memuat data...</div>
+  ) : questions.length === 0 ? (
+    <div>Belum ada pertanyaan...</div>
+  ) : (
                     <ul className="space-y-4">
                         {questions.map((q, index) => (
                             <motion.li

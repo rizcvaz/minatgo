@@ -43,7 +43,6 @@ export const cardVariants = {
     },
   }),
 };
-
 /**
  * Komponen Card Pertanyaan
  * Menggantikan setiap halaman buku dengan satu card yang elegan dan mobile-friendly
@@ -77,7 +76,7 @@ export function QuestionCard({
         animate="center"
         exit="exit"
         custom={direction}
-        className={`card-style flex flex-col justify-center items-center text-center p-6 transition-colors duration-500`}
+        className={`card-style mt-32 flex flex-col justify-center items-center text-center p-6 transition-colors duration-500`}
         onClick={() => handleAnswer(index, "START")} // Mulai tes saat klik
       >
         <Image
@@ -115,7 +114,7 @@ export function QuestionCard({
         animate="center"
         exit="exit"
         custom={direction}
-        className={`card-style flex flex-col justify-center items-center text-center p-6 transition-colors duration-500`}
+        className={`card-style mt-32 flex flex-col justify-center items-center text-center p-6 transition-colors duration-500`}
       >
         <Image src="/images/character/Chubby1.png" alt="Karakter Akhir" width={160} height={160} className="drop-shadow-xl animate-spin-bounce-slow" />
         <h2 className="text-2xl font-extrabold mt-6 mb-3">🎉 Tes Selesai!</h2>

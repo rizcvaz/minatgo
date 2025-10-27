@@ -306,7 +306,7 @@ if (isQuoteVisible) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-25 z-20 w-[85%] sm:w-[50%] max-w-md bg-black/80 dark:bg-zinc-800 backdrop-blur-sm rounded-2xl shadow-2xl p-3 flex items-center gap-3 text-white"
+        className="mt-24 z-20 w-[85%] sm:w-[50%] max-w-md bg-black/80 dark:bg-zinc-800 backdrop-blur-sm rounded-2xl shadow-2xl p-3 flex items-center gap-3 text-white"
     >
         <div className="flex items-center justify-center bg-green-100 dark:bg-green-900 rounded-lg w-8 h-8 sm:w-10 sm:h-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-green-400">
@@ -334,18 +334,18 @@ if (isQuoteVisible) {
 
 {/* Card Container Utama */}
 <div 
-    className="relative z-10 flex flex-col items-center justify-center w-full h-full min-h-screen pt-48 pb-20 sm:pt-36 sm:pb-12"
+    className="relative z-10 flex flex-col items-center justify-start w-full h-full min-h-screen pt-12 pb-20 sm:pb-12"
 >
     <div 
-        className="relative w-[85%] sm:w-[450px] h-[500px] max-w-md mx-auto flex items-center justify-center"
+        className="relative w-[85%] sm:w-[450px] h-[500px] max-w-md mx-auto flex items-start justify-center -mt-10"
+        // -mt-10 mengangkat card lebih ke atas
     >
-
         {/* AnimatePresence untuk Transisi Card */}
         <AnimatePresence initial={false} custom={direction}>
             {cardComponent}
         </AnimatePresence>
 
-        {/* Navigasi Card (Hanya saat pertanyaan/hasil, tidak saat Quote) */}
+        {/* Navigasi Card */}
         {showNavigation && (
             <motion.div
                 initial={{ opacity: 0 }}
@@ -358,6 +358,7 @@ if (isQuoteVisible) {
         )}
     </div>
 </div>
+
     </main>
   );
 }

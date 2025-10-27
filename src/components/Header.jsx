@@ -4,16 +4,56 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
+
+// ===========================================
+// KOMPONEN NAVLINKITEM BARU (TIDAK MENGGUNAKAN LAYOUT ID)
+// ===========================================
+function NavLinkItem({ item, darkMode }) {
+    const pathname = usePathname();
+    const isActive = pathname === item.href;
+
+    const activeColor = darkMode ? "text-yellow-400" : "text-blue-900";
+    const inactiveColor = darkMode ? "text-gray-200 hover:text-yellow-400" : "text-white hover:text-blue-900";
+    const underlineColor = darkMode ? "bg-yellow-400" : "bg-blue-900";
+
+    return (
+        <Link
+            href={item.href}
+            // Hapus key karena sudah ada di parent map
+            className={`transition-colors duration-200 relative pb-1 group font-semibold ${
+                isActive ? activeColor : inactiveColor
+            }`}
+        >
+            {item.name}
+            
+            {/* Garis Bawah Animasi Menggunakan 'width' */}
+            <motion.span 
+                className={`absolute bottom-0 left-0 h-[2px] ${underlineColor}`}
+                initial={{ width: 0 }}
+                // Animasi width dari 0% ke 100% jika aktif, dan sebaliknya
+                animate={{ width: isActive ? "100%" : "0%" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            />
+        </Link>
+    );
+}
+// ===========================================
+// AKHIR KOMPONEN NAVLINKITEM BARU
+// ===========================================
+
 
 export function Header({ showResults, resetForm, darkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const pathname = usePathname(); // Panggil usePathname di awal komponen
 
   const navLinks = [
     { name: "Home", href: "/" },
+    { name: "Test", href: "/test" },
     { name: "Question", href: "/admin" },
-    // { name: "About", href: "/about" },
-    // { name: "Contact", href: "/contact" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -41,20 +81,10 @@ export function Header({ showResults, resetForm, darkMode }) {
         </motion.div>
       </Link>
 
-      {/* 🔹 Tengah: Navigasi */}
-      <nav className="hidden md:flex gap-8 font-semibold text-sm md:text-base absolute left-1/2 -translate-x-1/2">
+      {/* 🔹 Tengah: Navigasi Desktop (MENGGUNAKAN KOMPONEN BARU) */}
+      <nav className="hidden md:flex gap-8 text-sm md:text-base absolute left-1/2 -translate-x-1/2">
         {navLinks.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className={`transition-colors duration-200 ${
-              darkMode
-                ? "text-gray-200 hover:text-yellow-400"
-                : "text-white hover:text-blue-900"
-            }`}
-          >
-            {item.name}
-          </Link>
+            <NavLinkItem key={item.name} item={item} darkMode={darkMode} />
         ))}
       </nav>
 
@@ -102,20 +132,29 @@ export function Header({ showResults, resetForm, darkMode }) {
             } backdrop-blur-lg border-t border-gray-300/40`}
           >
             <div className="flex flex-col items-center py-4 space-y-3">
-              {navLinks.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`block text-lg font-semibold transition-colors duration-200 ${
-                    darkMode
-                      ? "text-gray-200 hover:text-yellow-400"
-                      : "text-white hover:text-yellow-200"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navLinks.map((item) => {
+                // Logika penanda aktif untuk menu mobile
+                const isActive = pathname === item.href; 
+                  
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    // Terapkan style aktif dan hover di sini
+                    className={`block text-lg font-bold px-4 py-2 rounded-lg transition-colors duration-200 ${
+                      darkMode
+                        ? (isActive 
+                            ? "bg-yellow-400 text-zinc-900 shadow-md" // Dark Mode Aktif
+                            : "text-gray-200 hover:text-yellow-400 hover:bg-zinc-800")
+                        : (isActive 
+                            ? "bg-white text-blue-800 shadow-lg" // Light Mode Aktif
+                            : "text-white hover:text-yellow-200 hover:bg-blue-300/50")
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+              )})}
 
               {showResults && (
                 <motion.button
