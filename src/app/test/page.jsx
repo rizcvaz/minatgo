@@ -82,7 +82,6 @@ export default function TestCard() {
     if (typeof window === "undefined") return;
     const body = document.body;
     const originalStyle = body.style.overflow;
-    if (pathname === "/test") body.style.overflow = "hidden";
     return () => (body.style.overflow = originalStyle);
   }, [pathname]);
 
@@ -110,11 +109,23 @@ export default function TestCard() {
     return { counts: types };
   };
 
-  const quotesData = [
-    { text: "Jalan menuju keberhasilan dimulai saat kamu memilih jalur yang sesuai dengan hatimu.", by: "Penasihat Karir", quoteIndex: 1 },
-    { text: "Mengenali dirimu hari ini adalah kunci untuk merencanakan dirimu di masa depan.", by: "Mentor Pengembangan Diri", quoteIndex: 2 },
-    { text: "Jangan takut akan lambatnya kemajuan, takutlah jika kamu tidak bergerak sama sekali.", by: "Motivator", quoteIndex: 3 },
-  ];
+ const quotesData = [
+    { 
+        text: "Hampir 70% mahasiswa merasa salah memilih jurusan; tes minat bakat bisa membantu menemukan jalur yang tepat.", 
+        by: "Fakta Edukasi", 
+        quoteIndex: 1 
+    },
+    { 
+        text: "Tes minat bakat meningkatkan kesadaran diri dan membantu mengambil keputusan karir lebih matang.", 
+        by: "Psikolog Karir", 
+        quoteIndex: 2 
+    },
+    { 
+        text: "Mengetahui minat dan bakat sejak dini dapat mengurangi risiko salah jurusan dan frustrasi akademik.", 
+        by: "Penelitian Pendidikan", 
+        quoteIndex: 3 
+    },
+];
 
   const handleAnswer = (index, choice) => {
     if (isLoading || totalQuestions === 0) return;
@@ -148,15 +159,15 @@ export default function TestCard() {
       const nextIndex = index + 1;
       
       // LOGIKA MUNCULKAN QUOTE setelah pertanyaan ke-8, ke-16, ke-24
-      if (nextIndex === 8 || nextIndex === 16 || nextIndex === 24) {
-          setIsQuoteVisible(true); 
-          setDirection(1); 
-      } else if (nextIndex <= totalQuestions) {
-          setDirection(1); 
-          setCurrentQuestionIndex(nextIndex);
-      }
-      return;
-    }
+   if (nextIndex === 8 || nextIndex === 16 || nextIndex === 24) {
+          setIsQuoteVisible(true); 
+          setDirection(1); 
+      } else if (nextIndex <= totalQuestions) {
+          setDirection(1); 
+          setCurrentQuestionIndex(nextIndex);
+      }
+    }
+ 
 
     // NAVIGASI: Pindah ke pertanyaan berikutnya (jika sudah dijawab)
     if (index >= 0 && index < totalQuestions && userAnswers.hasOwnProperty(index)) {
@@ -173,19 +184,19 @@ export default function TestCard() {
     }
   };
 
-  const goToPrev = () => {
-    if (currentQuestionIndex > -1) {
-      if (isQuoteVisible) {
-          // Dari Quote, mundur ke pertanyaan sebelumnya
-          setIsQuoteVisible(false);
-          setDirection(-1); 
-      } else {
-          // Dari Pertanyaan, mundur ke pertanyaan sebelumnya
-          setDirection(-1);
-          setCurrentQuestionIndex(currentQuestionIndex - 1);
-      }
-    }
-  };
+const goToPrev = () => {
+    if (currentQuestionIndex > -1) {
+      if (isQuoteVisible) {
+          // Dari Quote, mundur ke pertanyaan sebelumnya
+          setIsQuoteVisible(false);
+          setDirection(-1); 
+      } else {
+          // Dari Pertanyaan, mundur ke pertanyaan sebelumnya
+          setDirection(-1);
+          setCurrentQuestionIndex(currentQuestionIndex - 1);
+      }
+    }
+  };
 
   const handleShowResult = () => {
     const totalAnswered = Object.keys(userAnswers).length;
@@ -219,35 +230,40 @@ export default function TestCard() {
   let cardComponent;
   let keyCard;
   
-  if (isQuoteVisible) {
-    const quoteIndex = Math.floor(currentQuestionIndex / 8); 
-    const quote = quotesData[quoteIndex - 1] || quotesData[0];
+if (isQuoteVisible) {
+        // PERBAIKAN LOGIKA: 
+        // currentQuestionIndex adalah index pertanyaan TERAKHIR yang dijawab, 
+        // yaitu 7 (untuk quote ke-1), 15 (untuk quote ke-2), atau 23 (untuk quote ke-3).
+        // Kita perlu mencari nomor urut quote: (Index + 1) / 8
+    const quoteNumber = Math.floor((currentQuestionIndex + 1) / 8); 
+    // Akses array quotesData (0-indexed)
+    const quote = quotesData[quoteNumber - 1] || quotesData[0]; // Fallback ke quote pertama jika ada error
+    
+    cardComponent = (
+        <QuoteCard
+            key={`quote-${quoteNumber}`} // Gunakan quoteNumber untuk key unik
+            quote={quote}
+            index={currentQuestionIndex}
+            handleAnswer={handleAnswer}
+            darkMode={darkMode}
+            direction={direction}
+        />
+    );
+    keyCard = `quote-${quoteNumber}`;
+  } 
+  else {
+    let CardContent;
 
-    cardComponent = (
-        <QuoteCard
-            key={`quote-${quoteIndex}`}
-            quote={quote}
-            index={currentQuestionIndex}
-            handleAnswer={handleAnswer}
-            darkMode={darkMode}
-            direction={direction}
-        />
-    );
-    keyCard = `quote-${quoteIndex}`;
-  } 
-  else {
-    let CardContent;
-
-    if (currentQuestionIndex === -1) {
-      CardContent = questions[0]; 
-      keyCard = "cover";
-    } else if (currentQuestionIndex < totalQuestions) {
-      CardContent = questions[currentQuestionIndex];
-      keyCard = `q-${currentQuestionIndex}`;
-    } else {
-      CardContent = questions[totalQuestions - 1]; 
-      keyCard = "result";
-    }
+    if (currentQuestionIndex === -1) {
+      CardContent = questions[0]; 
+      keyCard = "cover";
+    } else if (currentQuestionIndex < totalQuestions) {
+      CardContent = questions[currentQuestionIndex];
+      keyCard = `q-${currentQuestionIndex}`;
+    } else {
+      CardContent = questions[totalQuestions - 1]; 
+      keyCard = "result";
+    }
 
     cardComponent = (
       <QuestionCard
@@ -338,35 +354,6 @@ export default function TestCard() {
                 transition={{ delay: 0.5, duration: 0.3 }}
                 className="absolute inset-y-0 w-full flex justify-between items-center px-4 pointer-events-none"
             >
-                {/* Tombol Sebelumnya */}
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={goToPrev}
-                    className={`p-3 rounded-full shadow-xl bg-white/70 backdrop-blur-sm pointer-events-auto transition-colors ${
-                        darkMode ? "text-black hover:bg-white" : "text-black hover:bg-gray-100"
-                    }`}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                </motion.button>
-
-                {/* Tombol Selanjutnya (Hanya muncul jika sudah dijawab) */}
-                {(userAnswers.hasOwnProperty(currentQuestionIndex) || currentQuestionIndex === totalQuestions) && (
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => handleAnswer(currentQuestionIndex, "NEXT")}
-                        className={`p-3 rounded-full shadow-xl pointer-events-auto transition-colors ${
-                            darkMode ? "bg-indigo-600/90 text-white hover:bg-indigo-700" : "bg-orange-500/90 text-white hover:bg-orange-600"
-                        }`}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                        </svg>
-                    </motion.button>
-                )}
             </motion.div>
         )}
     </div>

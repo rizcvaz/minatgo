@@ -32,10 +32,23 @@ const cardVariants = {
 // Komponen QuoteCard
 export function QuoteCard({ quote, index, handleAnswer, darkMode, direction }) {
     const quotesData = [
-        { text: "Bakat bukanlah titik awal, melainkan hasil dari eksplorasi yang tak kenal lelah terhadap apa yang membuatmu hidup.", by: "Penjelajah Karir", quoteIndex: 1 },
-        { text: "Jangan mencari pekerjaan yang mudah, carilah pekerjaan yang selaras dengan kemampuan unikmu; di sana letak pertumbuhan.", by: "Pemandu Potensi", quoteIndex: 2 },
-        { text: "Minat adalah kompas, dan bakat adalah peta. Gunakan keduanya untuk menavigasi jalur yang paling bermakna bagimu.", by: "Motivator Diri", quoteIndex: 3 },
-    ];
+    { 
+        text: "Hampir 70% mahasiswa merasa salah memilih jurusan; tes minat bakat bisa membantu menemukan jalur yang tepat.", 
+        by: "Fakta Edukasi", 
+        quoteIndex: 1 
+    },
+    { 
+        text: "Tes minat bakat meningkatkan kesadaran diri dan membantu mengambil keputusan karir lebih matang.", 
+        by: "Psikolog Karir", 
+        quoteIndex: 2 
+    },
+    { 
+        text: "Mengetahui minat dan bakat sejak dini dapat mengurangi risiko salah jurusan dan frustrasi akademik.", 
+        by: "Penelitian Pendidikan", 
+        quoteIndex: 3 
+    },
+];
+
 
     const currentQuoteIndex = (index / 8) - 1;
     const currentQuote = quotesData[currentQuoteIndex] || quote;

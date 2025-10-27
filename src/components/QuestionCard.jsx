@@ -88,7 +88,7 @@ export function QuestionCard({
           className="drop-shadow-xl animate-bounce-slow"
         />
         <h1 className="text-3xl font-extrabold mt-6">Tes Minat Bakat</h1>
-        <p className={`mt-3 text-base text-center ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`mt-3 text-base text-center ${darkMode ? 'text-black' : 'text-gray-600'}`}>
           Tidak ada jawaban benar atau salah dalam pertanyaan ini, jawablah secara objektif
         </p>
         <motion.button
@@ -170,7 +170,7 @@ export function QuestionCard({
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, type: "spring" }}
-                className="mb-4"
+                className="mb-2"
             >
                 <Image
                     src={characterImage}
@@ -182,7 +182,7 @@ export function QuestionCard({
             </motion.div>
 
             {/* Area Teks Pertanyaan */}
-            <div className={`mb-4 w-full ${isMobile ? 'pt-0' : 'pt-2'}`}>
+            <div className={`mb-2 w-full ${isMobile ? 'pt-0' : 'pt-2'}`}>
                 {/* <span className={`text-xs sm:text-sm font-bold block mb-2 ${darkMode ? 'text-indigo-400' : 'text-orange-600'}`}>
                     Pilih Opsi yang Paling Sesuai
                 </span> */}
@@ -193,7 +193,7 @@ export function QuestionCard({
         </div>
 
         {/* Area Tombol Jawaban */}
-        <div className={`w-full max-w-sm ${isMobile ? 'pb-2' : 'pb-0'}`}>
+        <div className={`w-full mb-1 max-w-sm ${isMobile ? 'pb-2' : 'pb-0'}`}>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
